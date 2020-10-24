@@ -1,34 +1,63 @@
 /* mouseTrack.pde */
 
-// 点1
-PVector p1 = new PVector(0, 0);
-// 点2
-PVector p2 = new PVector(400, 400);
-// 点1用の速度ベクトル
-PVector v1 = new PVector(0, 0);
+public class Circle {
+	PVector position;
+	float radius;
+	color fillColor;
+
+	Circle(PVector _position, float _radius) {
+		position = _position;
+		radius = _radius;
+		fillColor = getRandomColor();
+	}
+
+	public void draw() {
+		// マウスの座標を取得する
+		PVector positionMouse = new PVector(mouseX, mouseY);
+		// Circleの中心からマウスの座標への方向ベクトル
+		PVector velocity = PVector.sub(positionMouse, position);
+		if (velocity.mag() > 0) {
+			velocity = PVector.div(velocity, velocity.mag());
+		}
+		// Circleをマウスの方にすこし近づける
+		position = PVector.add(position, velocity);
+		// 描画
+		fill(fillColor);
+		ellipse(position.x, position.y, radius, radius);
+	}
+
+	private color getRandomColor() {
+		color c = color(int(random(255)), int(random(255)), int(random(255)));
+		return c;
+	}
+}
+
+// num個のCircleを生成する
+int num = 10;
+Circle[] circles = new Circle[num];
 
 void setup() {
-	size(600, 600);
+	size(500, 500);
+	for (int i = 0; i < num; i++) {
+		circles[i] = new Circle(new PVector(random(width), random(height)), (10 - random(5)) * 10);
+	}
+	noStroke();
 }
 
 void draw() {
-	background(255);
-	// マウスの座標に点2を配置
-	p2.x = mouseX;
-	p2.y = mouseY;
+	//background(255);
+	fade();
+	for (int i = 0; i < num; i++) {
+		circles[i].draw();
+	}
+}
 
-	fill(0, 0, 255);
-	ellipse(p2.x, p2.y, 30, 30);
-	// 点1から点2への方向ベクトルをv1に格納
-	v1 = PVector.sub(p2, p1);
-	// 正規化
-  if (v1.mag() > 0) {
-    v1 = PVector.div(v1, v1.mag());
+void mouseClicked() {
+	// マウスをクリックすると画面が初期化される
+	setup();
+}
 
-  }
-
-  // 点1を移動
-  p1 = PVector.add(p1, v1);
-	fill(0, 255, 0);
-	ellipse(p1.x, p1.y, 30, 30);
+void fade() {
+	fill(255, 10);
+	rect(0, 0, width, height);
 }
