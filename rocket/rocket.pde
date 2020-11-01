@@ -13,9 +13,6 @@ public class Rocket {
 	}
 
 	public void display() {
-		//background(255);
-		//fill(0, 0, 255);
-		
 		PVector target = new PVector(mouseX, mouseY);
 		// マウスに向かってロケットの速度ベクトルを定義する
 		velocity = PVector.sub(target, position);
@@ -46,6 +43,8 @@ Rocket[] rockets = new Rocket[n];
 
 void setup() {
 	size(600, 600);
+	surface.setResizable(true);
+
 	for (int i = 0; i < n; i++) {
 		rockets[i] = new Rocket(new PVector(random(width), random(height)), PVector.random2D());
 	}
