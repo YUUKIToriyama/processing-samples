@@ -1,7 +1,7 @@
 /* matrix calculation */
 import java.lang.*;
 
-class PMat {
+static class PMat {
 	float[][] matrix;
 	int row;
 	int col;
@@ -31,7 +31,7 @@ class PMat {
 				dst[r][c] = matrix[r][c] + m.matrix[r][c];
 			}
 		}
-		
+
 		return new PMat(dst);
 	}
 
@@ -48,19 +48,19 @@ class PMat {
 				dst[r][c] = matrix[r][c] - m.matrix[r][c];
 			}
 		}
-		
+
 		return new PMat(dst);
 	}
 
 	// スカラー倍
 	public PMat mult(float a) {
-		float dst = new float[row][col];
+		float[][] dst = new float[row][col];
 		for (int r = 0; r < row; r++) {
 			for (int c = 0; c < col; c++) {
 				dst[r][c] = a * matrix[r][c];
 			}
 		}
-		
+
 		return new PMat(dst);
 	}
 
@@ -94,7 +94,7 @@ class PMat {
 				dst[c][r] = matrix[r][c];
 			}
 		}
-		
+
 		return new PMat(dst);
 	}
 
@@ -114,23 +114,23 @@ class PMat {
 	public static void credit() {
 		println("(C)Copyright 2020 YUUKIToriyama All Rights Reserved.");
 	}
- 
 }
 
 
 void setup() {
 	PMat a = new PMat(new float[][] {
-			{1, 3, 1},
-			{2, 4, 2},
-			{3, 0, 9}
+		{1, 3, 1}, 
+		{2, 4, 2}, 
+		{3, 0, 9}
 	});
 	PMat b = new PMat(new float[][] {
-			{1, 2},
-			{0, 3},
-			{2, 8}
+		{1, 2}, 
+		{0, 3}, 
+		{2, 8}
 	});
 	PMat c = a.product(b);
 	c.display();
+	PMat.credit();
 }
 
 void draw() {
