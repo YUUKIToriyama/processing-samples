@@ -119,14 +119,14 @@ static class PMat {
 
 void setup() {
 	PMat a = new PMat(new float[][] {
-		{1, 3, 1}, 
-		{2, 4, 2}, 
-		{3, 0, 9}
+		{1, 1, 0}, 
+		{1, 0, 1}, 
+		{3, 1, 1}
 	});
 	PMat b = new PMat(new float[][] {
-		{1, 2}, 
-		{0, 3}, 
-		{2, 8}
+		{-1, -1, 1}, 
+		{2, 1, -1}, 
+		{1, 2, -1}
 	});
 	PMat c = a.product(b);
 	c.display();
