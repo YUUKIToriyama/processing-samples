@@ -1,35 +1,39 @@
 float f;
-PVector[] arr = new PVector[4];
+int m;
+PVector[] polygon;
 
 void setup() {
-	size(512, 512);
-	background(255);
-	stroke(0);
-	f = random(0, 1);
-	arr[0] = new PVector(0, 0);
-	arr[1] = new PVector(width, 0);
-	arr[2] = new PVector(width, height);
-	arr[3] = new PVector(0, height);
+  size(512, 512);
+  background(255);
+  stroke(0);
+  fill(0);
+  text("Click to Update!", 10, 10);
+  m = int(random(3, 10));
+  f = random(0, 1);
+  polygon = new PVector[m];
+  for (int i = 0; i < m; i++) {
+    polygon[i] = new PVector((width/2)*(1 + sin(2*PI*i/m)), (height/2)*(1 + cos(2*PI*i/m)) );
+  }
 }
 
 void draw() {
-	arr = transformRect(arr);
-	stroke(random(255), random(255), random(255));
-	for (int i = 0; i < 4; i++) {
-		line(arr[i].x, arr[i].y, arr[(i+1)%4].x, arr[(i+1)%4].y);
-	}
+  polygon = transformRect(polygon);
+  stroke(random(255), random(255), random(255));
+  for (int i = 0; i < m; i++) {
+    line(polygon[i].x, polygon[i].y, polygon[(i+1)%m].x, polygon[(i+1)%m].y);
+  }
 }
 
 void mousePressed() {
-	setup();
+  setup();
 }
 
 PVector[] transformRect(PVector[] vertices) {
-	PVector[] points = new PVector[4];
-	for (int i = 0; i < 4; i++) {
-		PVector a = vertices[i];
-		PVector b = vertices[(i + 1) % 4];
-		points[i] = PVector.add(PVector.mult(a, 1 - f), PVector.mult(b, f));
-	}
-	return points;
+  PVector[] points = new PVector[m];
+  for (int i = 0; i < m; i++) {
+    PVector a = vertices[i];
+    PVector b = vertices[(i + 1) % m];
+    points[i] = PVector.add(PVector.mult(a, 1 - f), PVector.mult(b, f));
+  }
+  return points;
 }
