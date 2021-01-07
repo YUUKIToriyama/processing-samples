@@ -5,32 +5,36 @@ float k = 0.8; //反発係数
 float r = 20; //ボールの半径
 
 void setup() {
-	size(800, 600); 
-	p = new PVector(0, 0);
-	v = new PVector(10, 10);
-	a = new PVector(0, - 0.05);
+  size(800, 600); 
+  p = new PVector(0, 0);
+  v = new PVector(5, 5);
+  a = new PVector(0, - 0.05);
 }
 
 void draw() {
-	background(255);
-	fill(255, 0, 0);
-	
-	v = PVector.add(v, a); //速度の更新
-	p = PVector.add(p, v); //位置の更新
-	ellipse(p.x, height - p.y, r, r); //y座標を通常の座標系に直してボールを描画
-	
-	//床との跳ね返り
-	if (r / 2 > p.y) {
-	v.y = (- 1) * v.y;
-	p.y = r / 2;
-	}
-	//砲台
-	line(0, height, mouseX, mouseY);
+  background(255);
+  fill(255, 0, 0);
+
+  v = PVector.add(v, a); //速度の更新
+  p = PVector.add(p, v); //位置の更新
+  ellipse(p.x, height - p.y, r, r); //y座標を通常の座標系に直してボールを描画
+
+  //床との跳ね返り
+  if (p.y < r / 2) {
+    v.y = (- 1) * v.y;
+    p.y = r / 2;
+  }
+  //壁との跳ね返り
+  if (p.x > width || p.x < 0) {
+    v.x = v.x * (-1);
+  }
+  //砲台
+  line(0, height, mouseX, mouseY);
 }
 
 //マウスをクリックしたとき
 void mousePressed() {
-	//弾を発射しなおし
-	p = new PVector(0, 0);
-	v = new PVector(mouseX / 100,(height - mouseY) / 100);
+  //弾を発射しなおし
+  p = new PVector(0, 0);
+  v = new PVector(mouseX / 100, (height - mouseY) / 100);
 }
